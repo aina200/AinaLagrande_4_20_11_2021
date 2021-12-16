@@ -1,7 +1,7 @@
 function editNav() {
   let x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
-    x.className += " responsive";
+    x.className += "responsive";
   } else {
     x.className = "topnav";
   }
@@ -12,8 +12,9 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelectorAll(".close");
-
+const note = document.getElementById("note");
 const form = document.getElementById("form");
+const close_succes_Btn = document.querySelector(".close_succes");
 
 // INPUTS
 const inputFirst = document.querySelector('input[name=first]');
@@ -23,7 +24,9 @@ const inputDate = document.querySelector('input[name=birthdate]');
 const inputQuant = document.querySelector('input[name=quantity]');
 const inputLocation = document.querySelector('input[name=location]');
 const inputConditions = document.querySelector('input[name=conditions]');
+const inputs = document.querySelectorAll('.text-control');
 
+console.log(inputs)
 // RESULTS
 let resultFirst = document.getElementById("first-validation");
 let resultLast = document.getElementById("last-validation");
@@ -35,42 +38,81 @@ let resultConditions = document.getElementById("conditions-validation");
 let resultDate = document.getElementById("date-validation");
 let resultGeneral = document.getElementById("general-validation");
 
+// EMPECHER L'USER DE RENTRER UNE DATE PLUS TARD QU'AJOURDHUI
+let today = new Date();
+let dd = today.getDate();
+let mm = today.getMonth()+1; //January is 0!
+let yyyy = today.getFullYear();
+
+  if(dd<10){
+    dd='0'+dd
+  } 
+  if(mm<10){
+    mm='0'+mm
+  } 
+
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("birthdate").setAttribute("max", today);
+
 
 // REGEX 
 let regFirst = /[a-zA-Z]{2,64}/;
 let regLast = /[a-zA-Z]{2,64}/;
-let regEmail = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
-
+let regEmail = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+// let regEmail = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
 
 // count++
-const resultClass = document.querySelector(".result");
+// const resultClass = document.querySelector(".result");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // close modal event
 closeBtn.forEach((close) => close.addEventListener("click", closeForm));
+// close modal-succes event
+close_succes_Btn.addEventListener("click", close_succes_modal);
 
 // launch modal form
 function launchModal() {
   document.getElementById("form").reset();
-  // purger contenu des champs
+  // reinitialiser le  contenu des champs
   modalbg.style.display = "block";
+
+  inputFirst.classList.remove("js-succes-border");
+  inputFirst.classList.remove("js-error-border");
+
+  inputLast.classList.remove("js-succes-border");
+  inputLast.classList.remove("js-error-border");
+
+  inputEmail.classList.remove("js-succes-border");
+  inputEmail.classList.remove("js-error-border");
+
+  inputDate.classList.remove("js-succes-border");
+  inputDate.classList.remove("js-error-border");
+
+  inputQuant.classList.remove("js-succes-border");
+  inputQuant.classList.remove("js-error-border");
 
   document.querySelectorAll('.result').forEach(item => {
     item.style.display = "none";
-    // purger contenu des alertes
   });
 }
-
+// launch modal btn
 function closeForm() {
   modalbg.style.display = "none";
 }
+// launch modal-succes btn
+function close_succes_modal() {
+  note.style.display = "none";
+}
+// ESCAPE CLOSE 
+window.addEventListener('keydown', function(e){
+  if(e.key === 'Escape' || e.key === 'Esc'){
+    closeForm()
+    close_succes_modal()
+  }
+})
 
-// function displayNone(e) {
-//   // passer les id 
-//   e.style.display = "none";
-// }
-
+// CONDITIONS 
 inputFirst.addEventListener('input', function(e) {
     let value = e.target.value;
     if (value.match(regFirst)) {
@@ -79,7 +121,9 @@ inputFirst.addEventListener('input', function(e) {
     } 
     else {
       resultFirst.style.display = "inline-block";
+      inputFirst.classList.remove("js-succes-border");
       inputFirst.classList.add("js-error-border");
+      
       resultFirst.innerHTML = "Veuillez entrer 2 caractères minimun.";
     }
 });
@@ -92,6 +136,7 @@ inputLast.addEventListener('input', function(e) {
       resultLast.style.display = "none";
     } else {
       resultLast.style.display = "inline-block";
+      inputLast.classList.remove("js-succes-border");
       inputLast.classList.add("js-error-border");
       resultLast.innerHTML = "Veuillez entrer 2 caractères minimun.";
     }
@@ -107,6 +152,7 @@ inputEmail.addEventListener('input', function(e) {
       resultEmail.style.display = "none";
     } else {
       resultEmail.style.display = "inline-block";
+      inputEmail.classList.remove("js-succes-border");
       inputEmail.classList.add("js-error-border");
       resultEmail.innerHTML = "Choisissez une adresse électronique valide.";
     }
@@ -118,6 +164,7 @@ inputDate.addEventListener('change', function(e) {
       resultBirth.style.display = "none";
      } else {
       resultBirth.style.display = "inline-block";
+      inputDate.classList.remove("js-succes-border");
       inputDate.classList.add("js-error-border");
       resultBirth.innerHTML = "Ce champ doit être rempli.";
      }
@@ -130,6 +177,7 @@ inputDate.addEventListener('change', function(e) {
       resultQuant.style.display = "none";
      } else {
       resultQuant.style.display = "inline-block";
+      resultQuant.classList.remove("js-succes-border");
       inputQuant.classList.add("js-error-border");
       resultQuant.innerHTML = "Ce champ doit être rempli.";
      }
@@ -161,9 +209,6 @@ function countLocations(){
 // console.log(inputsLocation)
 
 
-
-
-
 document.getElementById("checkbox1").attributes["required"] = "";
 
 inputConditions.addEventListener('change', e => {
@@ -178,13 +223,13 @@ form.addEventListener("submit", e => {
   functionValidation();
 });
 
-function showNotification(){
-  
-  document.getElementById("note").style.display = "block";
-  setTimeout(function(){
-    document.getElementById("note").style.display = "none";
-  }, 3000);
+function showNotification() {
+
+  note.style.display = "block";
+  close_succes_Btn.style.display = "block";
 }
+
+
 
  function functionValidation() {
 

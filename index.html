@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link
       href="https://fonts.googleapis.com/css?family=DM+Sans"
-      rel="stylesheet"
-    />
+      rel="stylesheet"/>
   </head>
   <body>
     <div class="topnav" id="myTopnav">
@@ -28,6 +27,7 @@
     </div>
     <main>
       <div id="note">
+        <span class="close_succes"></span>
        <p>Merci ! Votre réservation a été reçue.</p> 
     </div>
       <div class="hero-section">
@@ -65,7 +65,7 @@
             <div class="result" id="general-validation"></div>
               <div
                 class="formData">
-                <label>Prénom</label>
+                <label for="first">Prénom</label>
                 <input
                   class="text-control"
                   type="text"
@@ -76,7 +76,7 @@
               </div>
               <div
                 class="formData">
-                <label>Nom</label>
+                <label for="last">Nom</label>
                 <input
                   class="text-control"
                   type="text"
@@ -87,7 +87,7 @@
               </div>
               <div
                 class="formData">
-                <label>E-mail</label>
+                <label for="email">E-mail</label>
                 <input 
                   class="text-control" 
                   type="email" 
@@ -98,18 +98,19 @@
               </div>
               <div
                 class="formData">
-                <label>Date de naissance</label>
+                <label for="birthdate">Date de naissance</label>
                 <input
                   class="text-control date"
                   type="date"
                   id="birthdate"
                   name="birthdate"
+                  max='2000-13-13'
                 />
                 <div class="result" id="date-validation"></div>
               </div>
               <div
                 class="formData">
-                <label>À combien de tournois GameOn avez-vous déjà participé ?</label>
+                <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label>
                 <input 
                 type="number" 
                 class="text-control combien" 
@@ -194,7 +195,7 @@
                 <input class="checkbox-input" type="checkbox" id="checkbox1" 
                  checked name="conditions" />
                 <label class="checkbox2-label" for="checkbox1">
-                  <span class="checkbox-icon"></span>
+                  <span class="checkbox-icon" ></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label><div class="result" id="conditions-validation"></div>
                 <br>
