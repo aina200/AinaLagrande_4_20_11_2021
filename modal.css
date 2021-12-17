@@ -14,7 +14,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  background-image: url("background.png");
+  /* background-image: url("background.png"); */
   font-family: var(--font-default);
   font-size: 18px;
   max-width: 1300px;
@@ -292,6 +292,31 @@ input[data-error]::after {
   transform: rotate(45deg);
 }
 .close:after {
+  transform: rotate(-45deg);
+}
+.close_succes {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 32px;
+  height: 32px;
+  opacity: 1;
+  cursor: pointer;
+  transform: scale(0.7);
+}
+.close_succes:before,
+.close_succes:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 33px;
+  width: 3px;
+  background-color: #fff;
+}
+.close_succes:before {
+  transform: rotate(45deg);
+}
+.close_succes:after {
   transform: rotate(-45deg);
 }
 .btn-submit,
@@ -708,6 +733,22 @@ footer {
     margin-top: 50px;
     text-align: center; 
   } 
+
+  /* .main-navbar{
+    background-color: #279e7a;
+     display: flex;
+     flex-direction: column; 
+    /* display: none; */
+  /* }
+  .main-navbar a {
+    background-color: #3876ac;
+  }
+  .responsive{
+
+    background-color: #279e7a;
+
+  } */
+
 }
 
 @media screen and (max-width: 540px) {

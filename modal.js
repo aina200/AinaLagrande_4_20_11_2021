@@ -22,11 +22,10 @@ const inputLast = document.querySelector('input[name=last]');
 const inputEmail = document.querySelector('input[name=email]');
 const inputDate = document.querySelector('input[name=birthdate]');
 const inputQuant = document.querySelector('input[name=quantity]');
-const inputLocation = document.querySelector('input[name=location]');
+const inputLocation = document.querySelectorAll('input[name=location]');
 const inputConditions = document.querySelector('input[name=conditions]');
 const inputs = document.querySelectorAll('.text-control');
 
-console.log(inputs)
 // RESULTS
 let resultFirst = document.getElementById("first-validation");
 let resultLast = document.getElementById("last-validation");
@@ -36,12 +35,11 @@ let resultQuant = document.getElementById("quant-validation");
 let resultLocation = document.getElementById("location-validation");
 let resultConditions = document.getElementById("conditions-validation");
 let resultDate = document.getElementById("date-validation");
-let resultGeneral = document.getElementById("general-validation");
 
 // EMPECHER L'USER DE RENTRER UNE DATE PLUS TARD QU'AJOURDHUI
 let today = new Date();
 let dd = today.getDate();
-let mm = today.getMonth()+1; //January is 0!
+let mm = today.getMonth()+1;
 let yyyy = today.getFullYear();
 
   if(dd<10){
@@ -54,15 +52,10 @@ let yyyy = today.getFullYear();
 today = yyyy+'-'+mm+'-'+dd;
 document.getElementById("birthdate").setAttribute("max", today);
 
-
 // REGEX 
 let regFirst = /[a-zA-Z]{2,64}/;
 let regLast = /[a-zA-Z]{2,64}/;
 let regEmail = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-// let regEmail = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
-
-// count++
-// const resultClass = document.querySelector(".result");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -74,7 +67,7 @@ close_succes_Btn.addEventListener("click", close_succes_modal);
 // launch modal form
 function launchModal() {
   document.getElementById("form").reset();
-  // reinitialiser le  contenu des champs
+// reset the contents of the fields
   modalbg.style.display = "block";
 
   inputFirst.classList.remove("js-succes-border");
@@ -146,7 +139,7 @@ inputLast.addEventListener('input', function(e) {
 inputEmail.addEventListener('input', function(e) {
    
     let value = e.target.value;
-    // si email match avec les valeurs de regex attendue 
+    // if email matches with expected regex values
     if (value.match(regEmail)) {
       inputEmail.classList.add("js-succes-border");
       resultEmail.style.display = "none";
@@ -171,7 +164,7 @@ inputDate.addEventListener('change', function(e) {
  });
 
  inputQuant.addEventListener('change', function(e) {
-   // écouter changement d'état
+   // listen to change of state
   if (inputQuant.value.length > 0) {
       inputQuant.classList.add("js-succes-border");
       resultQuant.style.display = "none";
@@ -184,36 +177,30 @@ inputDate.addEventListener('change', function(e) {
  });
 
 function countLocations(){
-  let theLocation = document.getElementsByClassName("location"),
-    i,
-    count = 0;
+  let theLocation = document.querySelectorAll('input[type=radio]'),i,count = 0;
   for (i = 0; i < theLocation.length; i++){
-   
     if (theLocation[i].checked){
       count++;
     } 
   }
   return count;
 };
+// REMOVE ERROR FUNCTION FOR RADIO INPUTS 
+for (var i = 0; i < inputLocation.length; i++) {
+  inputLocation[i].addEventListener('click', removeError); 
+}
+function removeError(e)
+{
+  resultLocation.style.display = "none";
+};
 
-
-// let inputsLocation = document.getElementsByName("location");
-
-// let theLocation = document.getElementsByClassName("location")
-// for (i = 0; i < theLocation.length; i++){
-//   inputsLocation.addEventListener('click', function() {
-//     console.log(inputsLocation)
-//   });
-// }
-
-// console.log(inputsLocation)
-
-
-document.getElementById("checkbox1").attributes["required"] = "";
-
+// ACCEPT INPUT CONDITIONS 
 inputConditions.addEventListener('change', e => {
   if(e.target.checked){
-    displayNone(resultConditions);
+    resultConditions.style.display = "none";
+  }
+  else{
+    resultConditions.style.display = "inline-block";
   }
 });
 
@@ -229,12 +216,10 @@ function showNotification() {
   close_succes_Btn.style.display = "block";
 }
 
-
-
  function functionValidation() {
 
   let inputCount = 0;
-  // initialisation du compteur
+  //counter initialization
 
   if (inputFirst.value.length== 0) {
     resultFirst.style.display = "inline-block";
@@ -276,22 +261,19 @@ function showNotification() {
   } 
 
   if (countLocations() == 0) {
-    // fonction appelante count 
     resultLocation.style.display = "inline-block";
     resultLocation.innerHTML = "Le champ d'option doit être rempli.";
     inputCount++;
   } 
-  
 
-
-  // Si les conditions ne sont pas checked 
+  //If the conditions are not checked
   if (!inputConditions.checked) {
     resultConditions.style.display = "inline-block";
     resultConditions.innerHTML = "Veuillez accepter les conditions.";
     inputCount++;
   }  
 
-  // S'il n'ya pas d'erreur 
+  // If there is no error
   else if (inputCount === 0) {
     modalbg.style.display = "none";
     showNotification();
