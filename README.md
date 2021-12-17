@@ -8,5 +8,5 @@ https://aina200.github.io/AinaLagrande_4_20_11_2021/
 
 ### Validation du formulaire en JS
 ***
-
+![Alt text](presantation.png?raw=true "Title")
 ![Alt text](presantation1.png?raw=true "Title")
