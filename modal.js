@@ -56,6 +56,7 @@ document.getElementById("birthdate").setAttribute("max", today);
 let regFirst = /[a-zA-Z]{2,64}/;
 let regLast = /[a-zA-Z]{2,64}/;
 let regEmail = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+// let test = regFirst.trim();
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -108,6 +109,12 @@ window.addEventListener('keydown', function(e){
 // CONDITIONS 
 inputFirst.addEventListener('input', function(e) {
     let value = e.target.value;
+
+    // if (value.trim()==='') {
+    //   inputFirst.classList.add("js-error-border");
+    //   resultFirst.style.display = "dfzidfsd";
+    //   console.log(value);
+    // }
     if (value.match(regFirst)) {
       inputFirst.classList.add("js-succes-border");
       resultFirst.style.display = "none";
@@ -221,9 +228,16 @@ function showNotification() {
   let inputCount = 0;
   //counter initialization
 
+ 
   if (inputFirst.value.length== 0) {
     resultFirst.style.display = "inline-block";
     resultFirst.innerHTML = "Ce champ doit être rempli.";
+    inputFirst.classList.add("js-error-border");
+    inputCount++;
+  } 
+  else if (inputFirst.value.trim()==="") {
+    resultFirst.style.display = "inline-block";
+    resultFirst.innerHTML = "Aucun espace est accepté";
     inputFirst.classList.add("js-error-border");
     inputCount++;
   } 
@@ -232,19 +246,33 @@ function showNotification() {
     inputFirst.classList.add("js-succes-border");
   }
 
+
   if (inputLast.value.length == 0) {
     resultLast.style.display = "inline-block";
     resultLast.innerHTML = "Ce champ doit être rempli.";
     inputLast.classList.add("js-error-border");
     inputCount++;
-  } 
-  
+  }  
+  else  if (inputLast.value.trim()==="") {
+    resultLast.style.display = "inline-block";
+    resultLast.innerHTML = "Aucun espace est accepté.";
+    inputLast.classList.add("js-error-border");
+    inputCount++;
+  }
+
   if (inputEmail.value.length == 0) {
     resultEmail.style.display = "inline-block";
     resultEmail.innerHTML = "Le champ email doit être rempli.";
     inputEmail.classList.add("js-error-border");
     inputCount++;
   } 
+  else if (inputEmail.value.trim()==="") {
+    resultEmail.style.display = "inline-block";
+    resultEmail.innerHTML = "Aucun espace est accepté.";
+    inputEmail.classList.add("js-error-border");
+    inputCount++;
+  } 
+
 
   if (inputDate.value.length == 0) {
     resultDate.style.display = "inline-block";
