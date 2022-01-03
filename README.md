@@ -4,7 +4,7 @@
 ***
 
 ## Lien du site :
-https://aina200.github.io/AinaLagrande_4_20_11_2021/
+https://aina200.github.io/Game-On/
 
 ### Validation du formulaire en JS
 ***
